@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div id="app">
+
+    <!-- Header -->
+    <div class="header">
+      <div class="container">
+        <div class="logo">ToDo or not ToDo</div>
+        <div class="form">
+          <input type="text"
+            v-bind:value="valueInput"
+            v-on:input="handleInput"
+            v-on:keypress.enter="addTask">
+          <button class="btn" v-on:click="addTask">Добавить</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+    <!-- Текущие задачи -->
+      <h2>
+        <span>Что бы сделать...</span>
+        <span class="mask-num">{{ needDoList.length }}</span>
+      </h2>
+      <ul class="mask-list">
+        <li
+          v-for="(mask, index) in needDoList"
+          :key="mask.id">
+          <div>
+            <input type="checkbox" v-on:change="doCheck(index, 'need')"/>
+            <span>{{ mask.title }}</span>
+          </div>
+          <button class="btn-remove" v-on:click="removeMask(index, 'need')">Удалить</button>
+        </li>
+      </ul>
+
+     <!-- Завершенные задачи --> 
+      <h2>
+        <span>Ура, сделано!</span>
+        <span class="mask-num">{{ completeList.length }}</span>
+      </h2>
+      <ul class="mask-list complete-list">
+        <li
+          v-for="(mask, index) in completeList"
+          :key="mask.id">
+          <div>
+            <input type="checkbox" v-on:change="doCheck(index, 'complete')"  checked>
+            <span>{{ mask.title }}</span>
+          </div>
+          <button class="btn-remove" v-on:click="removeMask(index, 'complete')">Удалить</button>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+
+  <script src="https://unpkg.com/vue@next"></script>
+  <script src="app.js"></script>
+</body>
+</html>
